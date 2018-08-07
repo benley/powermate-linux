@@ -210,27 +210,6 @@ int main(int argc, char *argv[]) {
     fprintf(stderr, "If you just installed this program, you might have to unplug the device and then plug it back in..\n");
   }
 
-  // Daemonize
-  int pid = fork();
-  if (pid == 0) {
-    // We're the child process!
-    // Release handle to working directory
-    if (chdir("/") < 0) {
-      fprintf(stderr, "chdir() failed");
-    }
-    // Close things
-    fclose(stdin);
-    fclose(stdout);
-    fclose(stderr);
-  }
-  else if (pid < 0) {
-    fprintf(stderr, "Failed to become a daemon, whatevs.\n");
-  }
-  else {
-    printf("Just became a daemon, deal with it!\n");
-    return 0;
-  }
-
   while (1) {
     // PulseAudio
     pa_mainloop *mainloop = pa_mainloop_new();
