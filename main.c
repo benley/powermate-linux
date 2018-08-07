@@ -94,11 +94,14 @@ int poll_func(struct pollfd *ufds, unsigned long nfds, int timeout, void *userda
   memcpy(pfds, ufds, nfds*sizeof(struct pollfd));
 
   // wait for devfd
+  _Bool tried_once = 0;
   while (devfd < 0) {
-    fprintf(stderr, "Attempting to open %s\n", dev);
     devfd = open(dev, O_RDWR);
     if (devfd == -1) {
-      fprintf(stderr, "Could not open %s: %s\n", dev, strerror(errno));
+      if (tried_once == 0) {
+        fprintf(stderr, "Could not open %s: %s (will retry)\n", dev, strerror(errno));
+        tried_once = 1;
+      }
       sleep(1);
     }
     else {
