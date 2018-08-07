@@ -7,3 +7,4 @@ powermate32
 Thumbs.db
 .DS_Store
 *.swp
+/result
