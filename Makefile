@@ -13,5 +13,4 @@ powermate32: main.c
 all: powermate powermate32
 
 clean:
-	-killall -q powermate powermate32
 	rm -f powermate powermate32
